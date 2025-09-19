@@ -30,6 +30,11 @@ def fib_iter(n: int) -> int:
     last: int = 0
     next: int = 1
     for _ in range(1, n):
+        # WARNING: we use tuple unpacking here. It's clever and 
+        # pithy (pythonic!) but opaque. The gist: last is 
+        # set to the previous value of next, and next is set to
+        # the previous value of last. We avoid the creation of 
+        # a temporary variable to hold old values.
         last, next = next, last + next
     return next
 
