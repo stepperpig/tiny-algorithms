@@ -38,6 +38,20 @@ def fib_iter(n: int) -> int:
         last, next = next, last + next
     return next
 
+# Now what if instead of simply outputting a single value we
+# want to output an entire sequence up to a given value? We can
+# use generators!
+from typing import Generator
+
+def fib_gen(n: int) -> Generator[int, None, None]:
+    yield 0
+    if n > 0: yield 1
+    last: int = 0
+    next: int = 1
+    for _ in range(n-1):
+        last, next = next, last + next
+        yield next
+
 if __name__ == "__main__":
     # print(fib_memoized(3))
     # print(memo)
@@ -45,5 +59,7 @@ if __name__ == "__main__":
     # print(memo)
     # print(fib_auto_memo(5))
     # print(fib_auto_memo(50))
-    print(fib_iter(5))
-    print(fib_iter(50))
+    # print(fib_iter(5))
+    # print(fib_iter(50))
+    for i in fib_gen(50):
+        print(i)
