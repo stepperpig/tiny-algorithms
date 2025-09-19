@@ -21,10 +21,24 @@ def fib_auto_memo(n: int) -> int:
         return n
     return fib_auto_memo(n-2) + fib_auto_memo(n-1)
 
+# Let's be even more performant. Let's use iteration!
+# With this approach, our loop body will run a maximum of n-1
+# times. Compare looping just 19 times compared to 21891 recursive
+# calls!
+def fib_iter(n: int) -> int:
+    if n == 0: return n
+    last: int = 0
+    next: int = 1
+    for _ in range(1, n):
+        last, next = next, last + next
+    return next
+
 if __name__ == "__main__":
     # print(fib_memoized(3))
     # print(memo)
     # print(fib_memoized(6))
     # print(memo)
-    print(fib_auto_memo(5))
-    print(fib_auto_memo(50))
+    # print(fib_auto_memo(5))
+    # print(fib_auto_memo(50))
+    print(fib_iter(5))
+    print(fib_iter(50))
