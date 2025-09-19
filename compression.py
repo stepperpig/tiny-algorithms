@@ -12,6 +12,8 @@ class CompressedGene:
     def __init__(self, gene: str) -> None:
         self._compress(gene)
 
+    # look at each char in the str, shifting bit string for each
+    # parse char, and setting the last two bits 
     def _compress(self, gene: str) -> None:
         self.bit_string: int = 1        # start with a sentinel
         for nucleotide in gene.upper():
@@ -27,3 +29,19 @@ class CompressedGene:
             else:
                 raise ValueError("Invalid Nucleotide: {}".format(nucleotide))
 
+    def decompress(self) -> str:
+        gene: str = ""
+
+        for i in range(0, self.bit_string.bit_length()-1, 2): # -1 to exclude sentinel
+            bits: int = self.bit_string >> i & 0b11           # shift and retrieve 2 relevant bits
+            if bits == 0b00:
+                gene += "A"
+            elif bits == 0b01:
+                gene += "C"
+            elif bits == 0b10:
+                gene += "G"
+            elif bits == 0b11:
+                gene += "T"
+            else:
+                raise ValueError("Invalid bits: {}".format(bits))
+        return gene[::-1]       # reverse string by slicing backward
